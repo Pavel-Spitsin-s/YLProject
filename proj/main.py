@@ -8,10 +8,10 @@ import datetime
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
-db_session.global_init("db/cinema.db")
+db_session.global_init("data/db/cinema.db")
 
 
-def add_viewer(name, email, cancel_code, session_id): # test commit from home
+def add_viewer(name, email, cancel_code, session_id):  # test commit from home
     viewer = Viewer()
     viewer.name = name
     viewer.email = email
