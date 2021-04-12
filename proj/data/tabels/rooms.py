@@ -8,3 +8,4 @@ class Room(SqlAlchemyBase):
                            primary_key=True, autoincrement=True, nullable=False)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     capacity = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+    matrix = []
