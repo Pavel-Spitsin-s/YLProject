@@ -1,0 +1,22 @@
+{
+    "films": [
+        {
+            "info": "Мортал Комбат *time *capacity *price *place"
+        },
+
+        {
+            "info": "Минари *time *capacity *price *place"
+        },
+        {
+            "info": "Будь моим Кириллом *time *capacity *price *place"
+        },
+        {
+            "info": "ЗОЖ *time *capacity *price *place"
+        },
+        {
+            "info": "Заповедь зла *time *capacity *price *place"
+        }, {
+            "info": "Кинотеатр кошмаров *time *capacity *price *place"
+        }
+    ]
+}
