@@ -22,6 +22,22 @@
     </head>
     <body>
         <h1 align="center"><div class="alert alert-dark" role="alert">Бронирование фильмов</div></h1>
+        <table align="center" width=100% height=20>
+      <tr>
+        <th><a href="/"><div class="alert alert-primary" role="alert">
+         Бронирование
+       </div></a></th>
+        <th><a href="scince.html"><div class="alert alert-primary" role="alert">
+         Мои сеансы
+       </div></a></th>
+        <th><a href="/login"><div class="alert alert-primary" role="alert">
+         Авторизация
+       </div></a></th>
+           <th><a href="/register"><div class="alert alert-primary" role="alert">
+         Регистрация
+       </div></a></th>
+      </tr>
+    </table>
         <button class="btn btn-primary" onclick="sortListDir()">Sort</button>
         <ul id="id02">
             {% for item in films['films'] %}
