@@ -9,8 +9,11 @@ from proj.data.users import User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
 R_PAD = [2, 3, 4]
 M_FORM = [5, 6, 7, 8, 9, 0]
+
+is_authorized = False
 
 
 def check_correct(num):
@@ -61,6 +64,33 @@ def login():
     if form.validate_on_submit():
         return redirect('/success')
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/seanses', methods=['GET', 'POST'])
+def seanses():
+    global is_authorized
+    if is_authorized:
+        return render_template("seanses.html")
+    else:
+        return redirect("/login")
+
+
+@app.route('/success')
+def success():
+    global is_authorized
+    is_authorized = True
+    return f"""<head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" 
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" 
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" 
+            crossorigin="anonymous">
+            <title>Успешная авторизация</title>
+        </head><h2 align="center">
+        <div class="alert alert-info" role="alert">Вход в аккаунт выполнен!</div></h2>
+        <div class="col text-center"><button type="button" class="btn btn-warning" >
+        <a href="/"><h3>Вернуться на главную</h3></a></button></div>"""
 
 
 @app.route('/')
