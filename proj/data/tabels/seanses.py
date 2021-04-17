@@ -1,3 +1,4 @@
+
 import sqlalchemy
 from ..db_session import SqlAlchemyBase
 
@@ -11,7 +12,7 @@ class Seanse(SqlAlchemyBase):
     date = sqlalchemy.Column(sqlalchemy.Date,
                              index=True, nullable=False)
     time = sqlalchemy.Column(sqlalchemy.Time,
-                             index=True, nullable=True)
+                             index=True, nullable=False)
+    cost = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     room_name = sqlalchemy.Column(sqlalchemy.String, nullable=False, index=True)
-    cancel_code = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    session_id = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+    sides_left = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)

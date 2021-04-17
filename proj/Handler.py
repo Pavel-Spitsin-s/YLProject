@@ -16,11 +16,15 @@ def add_viewer(name, email, cancel_code, session_id):  # test commit from home
     viewer = Viewer()
     viewer.name = name
     viewer.email = email
-    viewer.cancel_code = cancel_code
+    viewer.cancel_codse = cancel_code
     viewer.session_id = session_id
     db_sess = db_session.create_session()
     db_sess.add(viewer)
     db_sess.commit()
+
+
+def is_full(film_id, capacity):
+    pass
 
 
 def get_films():
@@ -28,11 +32,12 @@ def get_films():
     db_sess = db_session.create_session()
     for film in db_sess.query(Seanse).all():
         infor = {}
-        infor['info'] = ', '.join([film.name, str(film.date), str(film.time), str(film.cost), film.room_name])
+        infor['info'] = ', '.join([film.name, str(film.date), str(film.time), str(film.cost),
+                                   film.room_name, str(film.sides_left)])
         films.append(infor)
     response = {}
     response['films'] = films
-    with open('films.json', 'w') as file:
+    with open('films.json', 'w', encoding="utf-8") as file:
         json.dump(response, file, ensure_ascii=False)
 
 
@@ -45,13 +50,14 @@ def add_room(name, capacity):
     db_sess.commit()
 
 
-def add_session(name, date, time, room_name, cost):
+def add_session(name, date, time, room_name, cost, sides_left):
     session = Seanse()
     session.name = name
     session.date = date
     session.time = time
     session.cost = cost
     session.room_name = room_name
+    session.sides_left = sides_left
 
     session.room_name = room_name
     db_sess = db_session.create_session()
@@ -65,4 +71,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    app.run()

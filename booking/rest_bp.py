@@ -8,6 +8,7 @@ from booking.loginform import LoginForm
 from booking.user import RegisterForm
 from proj.data import db_session
 from proj.data.users import User
+from .main import is_authorized
 
 blueprint = flask.Blueprint(
     'news_api',
@@ -51,11 +52,10 @@ def login():
 
 @blueprint.route('/seanses', methods=['GET', 'POST'])
 def seanses():
-    global is_authorized
     if is_authorized:
         return render_template("seanses.html")
     else:
-        return redirect("/login")
+        return login()
 
 
 @blueprint.route('/success')
@@ -79,11 +79,17 @@ def success():
 @blueprint.route('/')
 @blueprint.route('/index')
 def index():
-    # Handler.main()
-    with open("films.json", "rt", encoding="utf8") as f:
+    # Handler.get_films()
+    with open("../proj/films.json", "rt", encoding="utf8") as f:
         films_list = json.loads(f.read())
     print(films_list)
     return render_template('site.html', films=films_list)
+
+
+# @blueprint.route('/choice<int: quantity>', methods=['POST', "GET"])
+# def choice(quantity):
+#     return render_template("choice.html", quantity)
+"""доделать"""
 
 
 @blueprint.route('/f', methods=['POST'])
@@ -113,4 +119,6 @@ def f():
         </head><h2 align="center">
         <div class="alert alert-info" role="alert">Вы успешно забронировали {result}!</div></h2>
         <div class="col text-center"><button type="button" class="btn btn-warning" >
-        <a href="/"><h3>Вернуться на главную</h3></a></button></div>"""
+        <a href="/"><h3>Вернуться на главную</h3></a></button></div>
+        <div class="col text-center"><button type="button" class="btn btn-warning" >
+        <a href="/choice<{int(result.split()[0])}>"><h3>Выбрать места</h3></a></button></div>"""
