@@ -23,6 +23,18 @@ def add_viewer(name, email, cancel_code, session_id):  # test commit from home
     db_sess.commit()
 
 
+def bron_sides(id, sides):
+    with open("../booking/halls/" + id, "rt", encoding="utf8") as f:
+        places = json.loads(f.read())
+        places = places['places']
+    for x, y in sides:
+        places[y][x] = 1
+    dict = {}
+    dict['places'] = places
+    with open("../booking/halls/" + id, "w", encoding="utf8") as f:
+        json.dump(dict, f, ensure_ascii=False)
+
+
 def is_full(film_id, capacity):
     pass
 
@@ -66,7 +78,7 @@ def add_session(name, date, time, room_name, cost, sides_left):
 
 
 def main():
-    get_films()
+    bron_sides('places_first_hall.json', [(0, 5), (1, 0), (3, 0), (2, 0)])
 
 
 if __name__ == '__main__':
