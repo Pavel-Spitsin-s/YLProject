@@ -2,7 +2,7 @@ from flask import Flask
 from data import db_session
 from data.tabels.seanses import Seanse
 from data.tabels.rooms import Room
-from data.tabels.viewers import Viewer
+from data.tabels.users import User
 import json
 import datetime
 
@@ -12,42 +12,70 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("data/db/cinema.db")
 
 
-def add_viewer(name, email, cancel_code, session_id):  # test commit from home
-    viewer = Viewer()
-    viewer.name = name
-    viewer.email = email
-    viewer.cancel_codse = cancel_code
-    viewer.session_id = session_id
+def add_user(name, email, password):
+    user = User()
+    user.name = name
+    user.email = email
+    user.password = password
     db_sess = db_session.create_session()
-    db_sess.add(viewer)
+    db_sess.add(user)
     db_sess.commit()
 
 
 def bron_sides(id, sides):
+    dict = {}
+
     with open("../booking/halls/" + id, "rt", encoding="utf8") as f:
         places = json.loads(f.read())
         places = places['places']
     for x, y in sides:
         places[y][x] = 1
-    dict = {}
     dict['places'] = places
+    print(places)
     with open("../booking/halls/" + id, "w", encoding="utf8") as f:
         json.dump(dict, f, ensure_ascii=False)
 
+def log_in(name, password):
+    data = []
+    db_sess = db_session.create_session()
+    for user in db_sess.query(User).all():
+        data.append((user.name, user.password))
+    for namex, passwordx in data:
+        if namex == name:
+            if passwordx == password:
+                return '0'
+            else:
+                return 'Неверный пароль'
+    return 'Неверное имя пользователя'
 
-def is_full(film_id, capacity):
-    pass
+
+def register(name, email, password):
+    names = []
+    emails = []
+    db_sess = db_session.create_session()
+    for user in db_sess.query(User).all():
+        names.append(user.name)
+        emails.append(user.email)
+    for namex in names:
+        if namex == name:
+            return 'Имя пользователя занято'
+    for emailx in emails:
+        if emailx == email:
+            return 'Почта занята'
+    add_user(name, email, password)
+    return '0'
 
 
 def get_films():
     films = []
+    inform = {}
+    response = {}
     db_sess = db_session.create_session()
     for film in db_sess.query(Seanse).all():
-        infor = {}
-        infor['info'] = ', '.join([film.name, str(film.date), str(film.time), str(film.cost),
-                                   film.room_name, str(film.sides_left)])
-        films.append(infor)
-    response = {}
+        inform['info'] = ', '.join([film.name, str(film.date), str(film.time), str(film.cost),
+                                    film.room_name, str(film.sides_left)])
+        films.append(inform)
+
     response['films'] = films
     with open('films.json', 'w', encoding="utf-8") as file:
         json.dump(response, file, ensure_ascii=False)
@@ -78,7 +106,7 @@ def add_session(name, date, time, room_name, cost, sides_left):
 
 
 def main():
-    bron_sides('places_first_hall.json', [(0, 5), (1, 0), (3, 0), (2, 0)])
+    print(log_in('name3', 'password5'))
 
 
 if __name__ == '__main__':
