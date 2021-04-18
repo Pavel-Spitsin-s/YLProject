@@ -1,13 +1,13 @@
 import flask
 from .checker import check_correct
 import json
-# from proj import Handler
+# from server import Handler
 from flask import Flask, render_template, request, redirect
 
 from booking.loginform import LoginForm
 from booking.user import RegisterForm
-from proj.data import db_session
-from proj.data.users import User
+from server.data import db_session
+from server.data.users import User
 from .main import is_authorized
 
 blueprint = flask.Blueprint(
@@ -86,10 +86,11 @@ def index():
     return render_template('site.html', films=films_list)
 
 
-# @blueprint.route('/choice<int: quantity>', methods=['POST', "GET"])
-# def choice(quantity):
-#     return render_template("choice.html", quantity)
-"""доделать"""
+@blueprint.route('/choice/<int:quantity>', methods=['POST', "GET"])
+def choice(quantity):
+    with open("halls/places_first_hall.json", "rt", encoding="utf8") as js:
+        matrix = json.loads(js.read())["places"]
+    return render_template("choice.html", matrix)
 
 
 @blueprint.route('/f', methods=['POST'])
@@ -121,4 +122,4 @@ def f():
         <div class="col text-center"><button type="button" class="btn btn-warning" >
         <a href="/"><h3>Вернуться на главную</h3></a></button></div>
         <div class="col text-center"><button type="button" class="btn btn-warning" >
-        <a href="/choice<{int(result.split()[0])}>"><h3>Выбрать места</h3></a></button></div>"""
+        <a href="/choice/{int(result.split()[0])}"><h3>Выбрать места</h3></a></button></div>"""
