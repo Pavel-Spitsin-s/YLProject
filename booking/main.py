@@ -3,7 +3,12 @@ from flask import Flask
 from booking import rest_bp
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+
+SECRET_KEY = 'yandexlyceum_secret_key'
+
+
+app.config['SECRET_KEY'] = SECRET_KEY
 
 
 is_authorized = False

@@ -1,14 +1,15 @@
-import flask
-from .checker import check_correct
 import json
+
+import flask
+from checker import check_correct
 # from server import Handler
-from flask import Flask, render_template, request, redirect
+from flask import render_template, request, redirect
 
 from booking.loginform import LoginForm
 from booking.user import RegisterForm
+from server.Handler import bron_sides
 from server.data import db_session
-from server.data.users import User
-from .main import is_authorized
+from server.data.tabels.users import User
 
 blueprint = flask.Blueprint(
     'news_api',
@@ -58,6 +59,12 @@ def seanses():
         return login()
 
 
+@blueprint.route('/process_data', methods=['GET', 'POST'])
+def process_data():
+    bron_sides([(1, 1)])
+    return redirect("/choice")
+
+
 @blueprint.route('/success')
 def success():
     global is_authorized
@@ -80,7 +87,7 @@ def success():
 @blueprint.route('/index')
 def index():
     # Handler.get_films()
-    with open("../proj/films.json", "rt", encoding="utf8") as f:
+    with open("../server/films.json", "rt", encoding="utf8") as f:
         films_list = json.loads(f.read())
     print(films_list)
     return render_template('site.html', films=films_list)
@@ -90,7 +97,11 @@ def index():
 def choice(quantity):
     with open("halls/places_first_hall.json", "rt", encoding="utf8") as js:
         matrix = json.loads(js.read())["places"]
-    return render_template("choice.html", matrix)
+    param = {}
+    param["matrix"] = matrix
+    param["quantity"] = quantity
+    param["check_correct"] = check_correct
+    return render_template("choice.html", **param)
 
 
 @blueprint.route('/f', methods=['POST'])
