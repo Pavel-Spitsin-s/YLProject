@@ -7,7 +7,7 @@ from flask import render_template, request, redirect
 
 from booking.loginform import LoginForm
 from booking.user import RegisterForm
-from server.Handler import bron_sides
+# from server.Handler import bron_sides
 from server.data import db_session
 from server.data.tabels.users import User
 
@@ -61,8 +61,8 @@ def seanses():
 
 @blueprint.route('/process_data', methods=['GET', 'POST'])
 def process_data():
-    bron_sides([(1, 1)])
-    return redirect("/choice")
+    # bron_sides([(1, 1)])
+    return redirect("/choice/1")
 
 
 @blueprint.route('/success')

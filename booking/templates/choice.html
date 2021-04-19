@@ -30,7 +30,7 @@
             {% for item in range(10) %}
                 {% if m[row][item] == 0 %}
                     <form action="/process_data" method="POST">
-                    <td><input type="submit" class="btn btn-success" value="Выбрать"></button></td></form>
+                    <td><input type="submit" class="btn btn-success" value="Выбрать"></td></form>
                 {% elif m[row][item] == 1 %}
                      <td><button type="button" class="btn btn-danger">Занято!!!</button> </td>
                 {% endif %}
