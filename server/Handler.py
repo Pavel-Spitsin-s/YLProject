@@ -1,8 +1,8 @@
 from flask import Flask
-from .data import db_session
-from .data.tabels.seanses import Seanse
-from .data.tabels.rooms import Room
-from .data.tabels.users import User
+from data import db_session
+from data.tabels.seanses import Seanse
+from data.tabels.rooms import Room
+from data.tabels.users import User
 import json
 import datetime
 
@@ -35,6 +35,7 @@ def bron_sides(id, sides):
     with open("../booking/halls/" + id, "w", encoding="utf8") as f:
         json.dump(dict, f, ensure_ascii=False)
 
+
 def log_in(name, password):
     data = []
     db_sess = db_session.create_session()
@@ -43,7 +44,7 @@ def log_in(name, password):
     for namex, passwordx in data:
         if namex == name:
             if passwordx == password:
-                return '0'
+                return 0
             else:
                 return 'Неверный пароль'
     return 'Неверное имя пользователя'
@@ -63,7 +64,7 @@ def register(name, email, password):
         if emailx == email:
             return 'Почта занята'
     add_user(name, email, password)
-    return '0'
+    return 0
 
 
 def get_films():

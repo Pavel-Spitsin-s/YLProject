@@ -7,9 +7,10 @@ from flask import render_template, request, redirect
 
 from booking.loginform import LoginForm
 from booking.user import RegisterForm
-# from server.Handler import bron_sides
+from server.Handler import bron_sides, register, log_in
 from server.data import db_session
 from server.data.tabels.users import User
+from .main import is_authorized
 
 blueprint = flask.Blueprint(
     'news_api',
@@ -36,6 +37,7 @@ def reqister():
             email=form.email.data,
             about=form.about.data
         )
+        register(form.name.data, form.email.data, form.password.data)
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
@@ -47,6 +49,7 @@ def reqister():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        log_in(form.username.data, form.password.data)
         return redirect('/success')
     return render_template('login.html', title='Авторизация', form=form)
 
@@ -61,7 +64,7 @@ def seanses():
 
 @blueprint.route('/process_data', methods=['GET', 'POST'])
 def process_data():
-    # bron_sides([(1, 1)])
+    bron_sides([(1, 1)])
     return redirect("/choice/1")
 
 
