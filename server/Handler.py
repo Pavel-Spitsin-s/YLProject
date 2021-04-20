@@ -1,13 +1,10 @@
 from flask import Flask
-from .data import db_session
-from .data.tabels.seanses import Seanse
-from .data.tabels.rooms import Room
-from .data.tabels.users import User
+from data import db_session
+from data.tabels.seanses import Seanse
+from data.tabels.rooms import Room
+from data.tabels.users import User
 import json
 import datetime
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 db_session.global_init("data/db/cinema.db")
 
@@ -34,6 +31,7 @@ def bron_sides(id, sides):
     print(places)
     with open("../booking/halls/" + id, "w", encoding="utf8") as f:
         json.dump(dict, f, ensure_ascii=False)
+
 
 def log_in(name, password):
     data = []
@@ -75,9 +73,10 @@ def get_films():
         inform['info'] = ', '.join([film.name, str(film.date), str(film.time), str(film.cost),
                                     film.room_name, str(film.sides_left)])
         films.append(inform)
+        inform = {}
 
     response['films'] = films
-    with open('films.json', 'w', encoding="utf-8") as file:
+    with open('../booking/films.json', 'w', encoding="utf-8") as file:
         json.dump(response, file, ensure_ascii=False)
 
 
@@ -106,7 +105,7 @@ def add_session(name, date, time, room_name, cost, sides_left):
 
 
 def main():
-    print(log_in('name3', 'password5'))
+    print(get_films())
 
 
 if __name__ == '__main__':
