@@ -10,6 +10,7 @@ from booking.user import RegisterForm
 # from server.Handler import bron_sides
 from server.data import db_session
 from server.data.tabels.users import User
+from .main import is_authorized
 
 blueprint = flask.Blueprint(
     'news_api',
