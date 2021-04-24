@@ -1,12 +1,10 @@
 from flask import Flask
-from data import db_session
-from data.tabels.seanses import Seanse
-from data.tabels.rooms import Room
-from data.tabels.users import User
+from .data import db_session
+from .data.tabels.seanses import Seanse
+from .data.tabels.rooms import Room
+from .data.tabels.users import User
 import json
 import datetime
-
-db_session.global_init("data/db/cinema.db")
 
 
 def add_user(name, email, password):

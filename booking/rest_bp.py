@@ -2,7 +2,7 @@ import json
 
 import flask
 from checker import check_correct
-# from server import Handler
+from server import Handler
 from flask import render_template, request, redirect
 
 from booking.loginform import LoginForm
@@ -32,15 +32,9 @@ def reqister():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
-        user = User(
-            name=form.name.data,
-            email=form.email.data,
-            about=form.about.data
-        )
-        user.set_password(form.password.data)
-        db_sess.add(user)
-        db_sess.commit()
-        return redirect('/login')
+        ans = Handler.register(form.name.data, form.email.data, form.password.data)
+        if ans == "0":
+            return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
 
@@ -48,7 +42,9 @@ def reqister():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect('/success')
+        ans = Handler.log_in(form.username.data, form.password.data)
+        if ans == "0":
+            return redirect('/success')
     return render_template('login.html', title='Авторизация', form=form)
 
 

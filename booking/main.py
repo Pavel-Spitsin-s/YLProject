@@ -1,9 +1,10 @@
 from flask import Flask
-
+from server.data import db_session
 from booking import rest_bp
 
 app = Flask(__name__)
 
+db_session.global_init("../server/data/db/cinema.db")
 
 SECRET_KEY = 'yandexlyceum_secret_key'
 

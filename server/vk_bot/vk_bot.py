@@ -1,5 +1,6 @@
 import requests
 import bs4
+from ..Handler import get_films
 
 
 class VkBot:
