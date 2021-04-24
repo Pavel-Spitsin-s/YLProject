@@ -8,6 +8,7 @@ from flask import render_template, request, redirect
 from booking.loginform import LoginForm
 from booking.user import RegisterForm
 # from server.Handler import bron_sides
+from server.Handler import bron_sides
 from server.data import db_session
 from server.data.tabels.users import User
 from .main import is_authorized
@@ -56,9 +57,10 @@ def seanses():
         return login()
 
 
-@blueprint.route('/process_data', methods=['GET', 'POST'])
-def process_data():
-    # bron_sides([(1, 1)])
+@blueprint.route('/process_data/<id>', methods=['GET', 'POST'])
+def process_data(id):
+    id = int(id)
+    bron_sides("places_first_hall.json", [(id % 11, id // 8)])
     return redirect("/choice/1")
 
 
@@ -83,7 +85,7 @@ def success():
 @blueprint.route('/')
 @blueprint.route('/index')
 def index():
-    # Handler.get_films()
+    Handler.get_films()
     with open("../server/films.json", "rt", encoding="utf8") as f:
         films_list = json.loads(f.read())
     print(films_list)

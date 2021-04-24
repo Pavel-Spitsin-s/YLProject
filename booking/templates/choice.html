@@ -23,13 +23,15 @@
 <body>
     {% set k = quantity %}
     {% set m = matrix %}
+    {% set cnt = [0] %}
     <h1 align="center"><div class="alert alert-dark" role="alert">Осталось выбрать {{check_correct(k)}}</div></h1>
     <table align="center" width=30% height=20 >
         {% for row in range(8) %}
         <tr>
             {% for item in range(10) %}
+                {% if cnt.append(cnt.pop() + 1) %}{% endif %}
                 {% if m[row][item] == 0 %}
-                    <form action="/process_data" method="POST">
+                    <form action="/process_data/{{cnt[0]}}" method="POST">
                     <td><input type="submit" class="btn btn-success" value="Выбрать"></td></form>
                 {% elif m[row][item] == 1 %}
                      <td><button type="button" class="btn btn-danger">Занято!!!</button> </td>
