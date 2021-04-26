@@ -60,7 +60,7 @@ def seanses():
 @blueprint.route('/process_data/<id>', methods=['GET', 'POST'])
 def process_data(id):
     id = int(id)
-    bron_sides("places_first_hall.json", [(id % 11, id // 8)])
+    bron_sides("places_first_hall.json", [(id % 11, id // 11)])
     return redirect("/choice/1")
 
 
