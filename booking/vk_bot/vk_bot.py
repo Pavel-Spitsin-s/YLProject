@@ -70,7 +70,7 @@ class VkBot:
             return self._get_weather()
 
         elif MESSAGE == self._COMMANDS[4]:
-            return 'Бронь можно оформить тут:\nhttp://127.0.0.1:8080/'
+            return 'Бронь можно оформить тут:\nhttps://booking123qaw.herokuapp.com/'
 
         # Время
         elif MESSAGE == self._COMMANDS[2]:
