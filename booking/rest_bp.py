@@ -86,9 +86,8 @@ def success():
 @blueprint.route('/index')
 def index():
     Handler.get_films()
-    with open("../server/films.json", "rt", encoding="utf8") as f:
+    with open("films.json", "rt", encoding="utf8") as f:
         films_list = json.loads(f.read())
-    print(films_list)
     return render_template('site.html', films=films_list)
 
 
