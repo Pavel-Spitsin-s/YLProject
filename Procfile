@@ -1,1 +1,1 @@
-web: gunicorn app:booking/main.py
+web: gunicorn app: booking/main.py
